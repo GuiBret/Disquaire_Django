@@ -4,10 +4,11 @@ from .models import Album, Artist, Contact, Booking
 from django.template import loader
 
 
+
 # Create your views here.
 def index(request):
     template = loader.get_template('store/index.html')
-    
+
     albums = Album.objects.filter(available=True).order_by('-created_at')[:12]
 
     return HttpResponse(template.render({"albums": albums}, request=request))

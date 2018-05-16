@@ -20,9 +20,10 @@ from django.conf import settings
 
 from store import views
 
+
 urlpatterns = [
     url(r'^$', views.index),
-    url(r'^store/', include('store.urls')),
+    url(r'^store/', include(('store.urls', 'store'), namespace='store')),
     url(r'^admin/', admin.site.urls)
 
 ]
