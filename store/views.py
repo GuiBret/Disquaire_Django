@@ -7,22 +7,35 @@ from .models import Album, Artist, Contact, Booking
 
 
 # Create your views here.
-def index(request):
+def index(request): # Displays latest albums
 
     albums = Album.objects.filter(available=True).order_by('-created_at')[:12]
+    context = {
+        "albums": albums,
+        "page_title": "Nos derniers albums"
+   }
 
-    return render(request, "store/index.html", {"albums": albums})
+    return render(request, "store/index.html", context)
 
-def albums(request):
+def albums(request): # Displays all albums
     albums = Album.objects.filter(available=True)
 
-    return render(request, "store/listing.html", {"albums": albums})
+    context = {
+        "albums": albums,
+        "page_title": "Tous nos albums"
+        }
+
+    return render(request, "store/listing.html", context)
 
 def detail(request, album_id):
     album = Album.objects.get(pk=album_id)
     artists = " ".join(artist.name for artist in album.artists.all())
-    
-    return render(request, "store/detail.html", {"album": album, "artists":artists})
+
+    context = {
+        "album": album,
+        "artists":artists
+    }
+    return render(request, "store/detail.html", context)
 
 def search(request):
     query = request.GET.get('query')
