@@ -1,0 +1,15 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+
+  {% if albums|length_is:"0" %}
+    <p>
+      Palsambleu ! Nous avons un problème !
+    </p>
+
+
+  {% else %}
+      {% include 'store/list.html' with page_title="Résultats" %}
+  {% endif %}
+{% endblock %}

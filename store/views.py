@@ -39,6 +39,8 @@ def detail(request, album_id):
 
 def search(request):
     query = request.GET.get('query')
+    message = ""
+
     if not query:
         albums = Album.objects.all()
     else:
@@ -47,17 +49,9 @@ def search(request):
         if not albums.exists():
             albums = Album.objects.filter(artists__name__icontains=query)
 
-        if not albums.exists():
-            message = "Misère de misère, nous n'avons trouvé aucun résultat ! "
+    context = {
+        "query": query,
+        "albums": albums
+    }
 
-
-        else:
-            albums = ["<li>{}</li>".format(album.title) for album in albums]
-            message = """
-                Nous avons trouvé les albums correspondant à votre requête ! Les voici :
-                <ul>
-                    {}
-                </ul>
-            """.format("</li><li>".join(albums))
-
-    return HttpResponse(message)
+    return render(request, "store/search.html", context)
