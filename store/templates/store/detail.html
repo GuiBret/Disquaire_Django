@@ -2,15 +2,28 @@
 
 
 {% block content %}
-    <h2 class="text-center">{{album.title}} : </h2>
+    <h2 class="text-center">Présentation de l'album</h2>
 
-    <h4>Artistes : </h4>
-    <p>
-      {{ artists }}
-    </p>
+    <div class='col-md-6 img-album'>
+      <img class="img-responsive" src="{{album.picture}}"/>
+    </div>
+    <div clss="col-md-6 infos-album">
+      <p>
+        Nom de l'album : <span class="nom_album">{{album.title}}</span>
+      </p>
+      <p>
+        Artistes : <span> {{ artists }}</span>
+      </p>
 
-    <span>Disponible ? </span>
-    <span>{{album.available}}</span>
+      <p>
+        Disponible : <span>{{album.available}}</span>
+      </p>
+
+
+    </div>
+
+
+
 
 
 {% endblock %}
