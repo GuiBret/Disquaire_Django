@@ -1,0 +1,16 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+    <h2 class="text-center">{{album.title}} : </h2>
+
+    <h4>Artistes : </h4>
+    <p>
+      {{ artists }}
+    </p>
+
+    <span>Disponible ? </span>
+    <span>{{album.available}}</span>
+
+
+{% endblock %}
