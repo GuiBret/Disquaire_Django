@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 
 from .models import Album, Artist, Contact, Booking
 
-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 # Create your views here.
@@ -18,11 +18,24 @@ def index(request): # Displays latest albums
     return render(request, "store/index.html", context)
 
 def albums(request): # Displays all albums
-    albums = Album.objects.filter(available=True)
+
+    album_list = Album.objects.filter(available=True)
+
+    page = request.GET.get('page')
+
+    paginator = Paginator(album_list, 3)
+
+    try:
+        albums = paginator.page(page)
+    except PageNotAnInteger:
+        albums = paginator.page(1)
+    except EmptyPage:
+        albums = paginator.page(paginator.num_pages)
 
     context = {
         "albums": albums,
-        "page_title": "Tous nos albums"
+        "page_title": "Tous nos albums",
+        "paginate": True
         }
 
     return render(request, "store/listing.html", context)
